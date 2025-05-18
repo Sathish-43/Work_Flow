@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Manager Dashboard</title>
+    <style>
+        .card-domain:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="text-center">Manager Dashboard</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+        <div class="col" <th:block th:each="domain : ${domains}">>
+            <div class="card card-domain h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title" th:text="${domain}"></h5>
+                    <form th:action="@{/submitProject}" method="post" th:object="${project}">
+                        <input type="hidden" th:field="*{domain}" th:value="${domain}" />
+                        <input type="text" th:field="*{name}" placeholder="Project Name" class="form-control mb-2" required />
+                        <textarea th:field="*{description}" placeholder="Description" class="form-control mb-2" required></textarea>
+                        <input type="text" th:field="*{techStack}" placeholder="Technical Stack" class="form-control mb-2" required />
+                        <input type="text" th:field="*{budget}" placeholder="Budget" class="form-control mb-2" required />
+                        <input type="date" th:field="*{startDate}" class="form-control mb-2" required />
+                        <input type="date" th:field="*{endDate}" class="form-control mb-2" required />
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
