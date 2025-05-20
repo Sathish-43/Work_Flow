@@ -2,9 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>PM Team Page</title>
+    <title>PM Team Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h2 th:text="'Welcome PM Team, ' + ${name}"></h2>
+<div class="container mt-4">
+    <h2 class="text-center">PM Team Project Allocation</h2>
+    <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
+        <div class="col" th:each="project : ${projects}">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${project.name}">Project Name</h5>
+                    <p class="card-text"><strong>Domain:</strong> <span th:text="${project.domain}"></span></p>
+                    <p class="card-text"><strong>Description:</strong> <span th:text="${project.description}"></span></p>
+                    <p class="card-text"><strong>Tech Stack:</strong> <span th:text="${project.techStack}"></span></p>
+                    <p class="card-text"><strong>Budget:</strong> ₹<span th:text="${project.budget}"></span></p>
+                    <p class="card-text"><strong>Timeline:</strong> 
+                        <span th:text="${project.startDate}"></span> to 
+                        <span th:text="${project.endDate}"></span>
+                    </p>
+					
+					<p th:if="${project.completed}" class="text-success"><strong>Status:</strong> ✅ Completed</p>
+					                   <p th:unless="${project.completed}" class="text-warning"><strong>Status:</strong> In Progress</p>
+
+                    <!-- Button for allocating to employee (you can link to another page or modal) -->
+                    <form th:action="@{/allocate}" method="get">
+                        <input type="hidden" name="projectId" th:value="${project.id}" />
+                        <button type="submit" class="btn btn-primary mt-2 w-100">Allocate to Employee</button>
+                    </form>
+					
+					<div th:if="${project.reports != null}">
+					                        <h6 class="mt-3">Daily Reports:</h6>
+					                        <ul class="list-group">
+					                            <li class="list-group-item" th:each="report : ${project.reports}">
+					                                <strong>Date:</strong> <span th:text="${report.date}"></span><br/>
+					                                <strong>Features:</strong> <span th:text="${report.features}"></span><br/>
+					                                <strong>Methodology:</strong> <span th:text="${report.methodology}"></span><br/>
+					                                <strong>Programming:</strong> <span th:text="${report.programming}"></span><br/>
+					                                <strong>Database:</strong> <span th:text="${report.database}"></span>
+					                            </li>
+					                        </ul>
+					                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

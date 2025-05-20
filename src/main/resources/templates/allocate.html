@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Allocate Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	</head>
+<body>
+<div class="container mt-4">
+    <h2 class="text-center">Select an Employee to Allocate Project</h2>
+    <form th:action="@{/allocateProject}" method="post">
+        <input type="hidden" name="projectId" th:value="${projectId}" />
+        <div class="list-group mt-4">
+            <div class="list-group-item" th:each="emp : ${employees}">
+                <input type="radio" name="employeeId" th:value="${emp.id}" required />
+                <strong th:text="${emp.name}"></strong> - <span th:text="${emp.email}"></span>
+                <span class="badge bg-info ms-2">Projects: <span th:text="${projectCountMap[emp.id] ?: 0}"></span></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Allocate</button>
+    </form>
+</div>
+</body>
+</html>

@@ -23,6 +23,10 @@ public class User {
     private String phone;
     private String designation;
     private String password;
+    
+    public Long getId() {
+        return id;
+    }
 	public String getName() {
 		return name;
 	}
